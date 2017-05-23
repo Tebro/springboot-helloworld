@@ -3,10 +3,6 @@ node('maven') {
       checkout scm
   }
   stage('build') {
-    steps {
-      sh "pwd"
-      sh "ls -lah"
-      sh "mvn clean verify"
-    }
+    sh "mvn clean verify"
   }
 }
