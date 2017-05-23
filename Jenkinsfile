@@ -4,5 +4,6 @@ node('maven') {
   }
   stage('build') {
     sh "mvn clean verify"
+    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
   }
 }
