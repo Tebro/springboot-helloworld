@@ -4,4 +4,4 @@ cd /tmp/src
 
 ./mvnw clean verify
 
-mv target/*.jar /app.jar
+mv target/*.jar /app/app.jar
