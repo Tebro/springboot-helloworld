@@ -1,4 +1,4 @@
-node('java:8') {
+node('maven') {
   stage 'build'
   sh "./mvnw clean verify"
 }
