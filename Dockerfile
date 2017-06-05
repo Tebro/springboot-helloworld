@@ -10,4 +10,4 @@ RUN mv target/demo-0.0.1-SNAPSHOT.jar /app.jar
 
 ADD run.sh /run.sh
 
-CMD java -jar /app.jar
+CMD /run.sh
