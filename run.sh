@@ -1,7 +1,8 @@
 #!/bin/bash
 
-ln -s /etc/config/application.properties /application.properties
-
+if [ -f /etc/config/application.properties ]; then
+    ln -s /etc/config/application.properties /application.properties
+fi
 
 OPTS=""
 
