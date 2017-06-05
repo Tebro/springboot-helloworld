@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ln -s /etc/config/application.properties /application.properties
+
+
 OPTS=""
 
 while read -r line; do
