@@ -18,7 +18,7 @@ public class HelloWorldController {
 
     @RequestMapping("/")
     public String helloWorld() {
-        return "Hello" + helloName +" , I am: " + hostnameFinder.get();
+        return "Hello " + helloName +" , I am: " + hostnameFinder.get();
     }
 
 }
