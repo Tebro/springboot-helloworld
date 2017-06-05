@@ -6,7 +6,9 @@ WORKDIR /src
 
 RUN ./mvnw clean verify
 
-RUN mv target/demo-0.0.1-SNAPSHOT.jar /app.jar
+RUN mkdir /app && chmod 777 /app
+
+RUN mv target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
 
 ADD run.sh /run.sh
 
