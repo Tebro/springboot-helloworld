@@ -10,8 +10,6 @@ RUN mkdir /app && chmod 777 /app
 
 RUN mv target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
 
-ADD run.sh /run.sh
-
 WORKDIR /app
 
-CMD /run.sh
+CMD java -jar /app/app.jar
