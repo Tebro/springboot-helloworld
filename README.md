@@ -9,7 +9,7 @@ This is a simple hello world SpringBoot project for testing stuff with
 
 ### Build Image
 
-    docker build -t demo .
+    docker build -f Dockerfile-nonjdk -t demo .
 
 
 ### Run image
