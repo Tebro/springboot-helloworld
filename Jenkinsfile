@@ -25,22 +25,20 @@ podTemplate(label: 'buildPod',
             stage('Build Docker Image') {
                 sh """
                 #!/bin/bash
-                NAMESPACE=`cat /var/run/configs/registry-config/namespace`
-                REGISTRY=`cat /var/run/configs/registry-config/registry`
-                docker build -t \${REGISTRY}/\${NAMESPACE}/boot-hello-world:${env.BUILD_NUMBER} -f Dockerfile-nonjdk .
+                REPO=`cat /var/run/configs/registry-config/repository`
+                docker build -t ${REPO}:${env.BUILD_NUMBER} -f Dockerfile-nonjdk .
                 """
             }
             stage('Push Docker Image to Registry') {
                 sh """
                 #!/bin/bash
-                NAMESPACE=`cat /var/run/configs/registry-config/namespace`
-                REGISTRY=`cat /var/run/configs/registry-config/registry`
+                REPO=`cat /var/run/configs/registry-config/repository`
                 set +x
                 DOCKER_USER=`cat /var/run/secrets/registry-account/username`
                 DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
-                docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
+                docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} 
                 set -x
-                docker push \${REGISTRY}/\${NAMESPACE}/boot-hello-world:${env.BUILD_NUMBER}
+                docker push ${REPO}:${env.BUILD_NUMBER}
                 """
             }
         }
@@ -49,8 +47,7 @@ podTemplate(label: 'buildPod',
                 sh """
                 #!/bin/bash
                 set +e
-                NAMESPACE=`cat /var/run/configs/registry-config/namespace`
-                REGISTRY=`cat /var/run/configs/registry-config/registry`
+                REPO=`cat /var/run/configs/registry-config/repository`
                 DEPLOYMENT=`kubectl get deployments | grep boot-hello-world awk '{print \$1}'`
                 kubectl get deployments \${DEPLOYMENT}
                 if [ \${?} -ne "0" ]; then
@@ -59,7 +56,7 @@ podTemplate(label: 'buildPod',
                     exit 1
                 fi
                 # Update Deployment
-                kubectl set image deployment/\${DEPLOYMENT} boot-hello-world=\${REGISTRY}/\${NAMESPACE}/boot-hello-world:${env.BUILD_NUMBER}
+                kubectl set image deployment/\${DEPLOYMENT} boot-hello-world=${REPO}:${env.BUILD_NUMBER}
                 kubectl rollout status deployment/\${DEPLOYMENT}
                 """
             }
