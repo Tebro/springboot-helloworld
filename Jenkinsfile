@@ -25,8 +25,8 @@ podTemplate(label: 'buildPod',
             stage('Build Docker Image') {
                 sh """
                 #!/bin/bash
-                tree
                 ls -lah
+                ls -lah target/
                 """
                 unstash(name: 'jar')
                 sh """
