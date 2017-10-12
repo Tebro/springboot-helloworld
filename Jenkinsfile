@@ -17,8 +17,8 @@ podTemplate(label: 'buildPod',
             sh """
             #!/bin/bash
             ./mvnw clean verify
+            chmod 666 target/demo-0.0.1-SNAPSHOT.jar
             """
-            stash(name: 'jar', includes: 'target/demo-0.0.1-SNAPSHOT.jar')
           }
         }
         container('docker') {
@@ -28,7 +28,6 @@ podTemplate(label: 'buildPod',
                 ls -lah
                 ls -lah target/
                 """
-                unstash(name: 'jar')
                 sh """
                 #!/bin/bash
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
