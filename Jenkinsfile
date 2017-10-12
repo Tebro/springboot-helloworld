@@ -25,11 +25,6 @@ podTemplate(label: 'buildPod',
             stage('Build Docker Image') {
                 sh """
                 #!/bin/bash
-                ls -lah
-                ls -lah target/
-                """
-                sh """
-                #!/bin/bash
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
                 docker build -t \${REGISTRY}/\${NAMESPACE}/boot-hello-world:${env.BUILD_NUMBER} -f Dockerfile-nonjdk .
