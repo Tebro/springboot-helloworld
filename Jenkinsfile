@@ -26,7 +26,7 @@ podTemplate(label: 'buildPod',
                 sh """
                 #!/bin/bash
                 REPO=`cat /var/run/configs/registry-config/repository`
-                docker build -t ${REPO}:${env.BUILD_NUMBER} -f Dockerfile-nonjdk .
+                docker build -t \${REPO}:${env.BUILD_NUMBER} -f Dockerfile-nonjdk .
                 """
             }
             stage('Push Docker Image to Registry') {
@@ -38,7 +38,7 @@ podTemplate(label: 'buildPod',
                 DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
                 docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} 
                 set -x
-                docker push ${REPO}:${env.BUILD_NUMBER}
+                docker push \${REPO}:${env.BUILD_NUMBER}
                 """
             }
         }
@@ -56,7 +56,7 @@ podTemplate(label: 'buildPod',
                     exit 1
                 fi
                 # Update Deployment
-                kubectl set image deployment/\${DEPLOYMENT} boot-hello-world=${REPO}:${env.BUILD_NUMBER}
+                kubectl set image deployment/\${DEPLOYMENT} boot-hello-world=\${REPO}:${env.BUILD_NUMBER}
                 kubectl rollout status deployment/\${DEPLOYMENT}
                 """
             }
