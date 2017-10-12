@@ -48,7 +48,7 @@ podTemplate(label: 'buildPod', serviceAccount: 'riki-jenkins-jenkins',
                 #!/bin/bash
                 set +e
                 REPO=`cat /var/run/configs/registry-config/repository`
-                DEPLOYMENT=`kubectl get deployments | grep boot-hello-world awk '{print \$1}'`
+                DEPLOYMENT=`kubectl get deployments | grep boot-hello-world | awk '{print \$1}'`
                 kubectl get deployments \${DEPLOYMENT}
                 if [ \${?} -ne "0" ]; then
                     # No deployment to update
