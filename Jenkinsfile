@@ -34,10 +34,12 @@ podTemplate(label: 'buildPod',
             #!/bin/bash
             ./mvnw clean verify
             """
+            stash(name: 'jar', includes: 'target/demo-0.0.1-SNAPSHOT.jar')
           }
         }
         container('docker') {
             stage('Build Docker Image') {
+                unstash(name: 'jar')
                 sh """
                 #!/bin/bash
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
